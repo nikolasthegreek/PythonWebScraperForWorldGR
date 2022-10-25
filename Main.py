@@ -1,20 +1,14 @@
 import HTMLManager
 
-
 Letters=['Α','Β','Γ','Δ','Ε','Ζ','Η','Ι','Κ','Λ','Μ','Ν','Ξ','Ο','Π','Ρ','Σ','Τ','Υ','Φ','Χ','Ψ','Ω']
 LetterCounter=0
-WordCounter=0
+WordCounter=5
 LetterDone=False
 
-print("feching")
-htmlitem=HTMLManager.GetHTML(Letters[LetterCounter],WordCounter)
-print("parsing")
+def GetData(letter,incriment):
+    return HTMLManager.GetData(letter,incriment).split("%")
 
-Segments= htmlitem.split("<dl")
-del Segments[:1]
-Segments[-1]=Segments[-1].split("</dl>")[1]
+data = GetData(Letters[LetterCounter],WordCounter)
 
-print("done")
-
-while not LetterDone :
-    break
+for datum in data:
+    print(datum)
