@@ -2,6 +2,7 @@ from turtle import done
 import requests
 
 def GenLink (letter,incriment):
+    print("start")
     return "https://www.greek-language.gr/greekLang/modern_greek/tools/lexica/triantafyllides/search.html?start={}&lq={}*&dq=".format(incriment*10,letter)
 
 def GetHTML(letter,incriment):
@@ -10,13 +11,16 @@ def GetData(letter,incriment):
     htmlitem=GetHTML(letter,incriment)
 
     Segments= htmlitem.split("<dl")
+
+    if(len(Segments)<2):
+        return "NULL"
+
     del Segments[:1]
     Segments[-1]=Segments[-1].split("</dl>")[0]
     i=0
     for segment in Segments:
         Segments[i]=segment.split("<b>")[1].split("</b>")[0]
         i+=1
-
     i=0
     for segment in Segments:
         Segments[i]=segment.split(" ")[0]
