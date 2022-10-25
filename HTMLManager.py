@@ -7,9 +7,7 @@ def GenLink (letter,incriment):
 def GetHTML(letter,incriment):
     return requests.get(GenLink(letter,incriment)).text
 def GetData(letter,incriment):
-    print("feching")
     htmlitem=GetHTML(letter,incriment)
-    print("parsing")
 
     Segments= htmlitem.split("<dl")
     del Segments[:1]
@@ -23,5 +21,4 @@ def GetData(letter,incriment):
     for segment in Segments:
         Segments[i]=segment.split(" ")[0]
         i+=1
-    print("done")
     return "%".join(Segments)
