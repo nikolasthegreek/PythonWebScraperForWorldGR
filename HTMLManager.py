@@ -17,7 +17,6 @@ def RemoveTone (word):
     word.replace("ό","ο")
     word.replace("ύ","υ")
     word.replace("ώ","ω")
-    word.replace("B","Β")
     return word
 
 def CutWord(segment,letter):
@@ -34,6 +33,8 @@ def CutWord(segment,letter):
         else:
             print("del: ",segment[0],"-=-",segment[0][0])
             del segment[:1]
+        if(len(segment)==0):
+            return "NULL"
     return segment
 
 
