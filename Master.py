@@ -6,26 +6,29 @@ from timeit import repeat
 #initialasation of leters and progres
 Letters=['Α','Β','Γ','Δ','Ε','Ζ','Η','Ι','Κ','Λ','Μ','Ν','Ξ','Ο','Π','Ρ','Σ','Τ','Υ','Φ','Χ','Ψ','Ω']
 LetterCounter=0
-WordCounter=0
+PageCounter=0
 LetterDone=False
 
 
 #init of HTML manager
 
 import HTMLManager
-HTMLManager.LeterProgress=[Letters[LetterCounter],WordCounter]
+HTMLManager.LeterProgress=[Letters[LetterCounter],PageCounter]
 
-#definiton of storage
-
-DBArray=[]
-memory=["","","","","","","","","",""]
+#init of storage
+import db_manager
+db_manager.DeleteDB()
+db_manager.createtables()
+DBBuffer=[]
+Memory=["","","","","","","","","",""]
+WordCount=0
 
 def UpdateProgress():
-    HTMLManager.LeterProgress=[Letters[LetterCounter],WordCounter]
+    HTMLManager.LeterProgress=[Letters[LetterCounter],PageCounter]
 UpdateProgress()
 while LetterCounter<= len(Letters):
     while not LetterDone:
-        WordCounter+=1
+        PageCounter+=1
         UpdateProgress()
         data = HTMLManager.GetData().split("%")
         if(data=="NULL"):
@@ -34,19 +37,23 @@ while LetterCounter<= len(Letters):
             i=0
             Sameword=True
             for datum in data:
-                if datum!=memory[i]:
+                if datum!=Memory[i]:
                     Sameword=False
                 else:
                     break
                 if(len(datum)==5):
                         if (not("-"in datum)):
-                            DBArray.append(datum)
-                memory[i]=datum
+                            DBBuffer.append(datum)
+                            WordCount=+1
+                Memory[i]=datum
                 i+=1
+            if(len(DBBuffer)>=10):
+                db_manager.InsertWords(DBBuffer)
+                DBBuffer=[]
             if Sameword:
                 LetterDone=True
-        print(WordCounter,data[-1],len(DBArray))
+        print(PageCounter,data[-1],WordCount)
     print("done with ",Letters[LetterCounter]," starting with ",Letters[LetterCounter+1])
     LetterCounter+=1
-    WordCounter=0
+    PageCounter=0
     LetterDone=False

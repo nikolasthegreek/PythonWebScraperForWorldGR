@@ -8,7 +8,6 @@ def GenLink (letter,incriment):
     return "https://www.greek-language.gr/greekLang/modern_greek/tools/lexica/triantafyllides/search.html?start={}&lq={}*&dq=".format(incriment*10,letter)
 
 def GetHTML(letter,incriment):
-    print(GenLink(letter,incriment))
     return requests.get(GenLink(letter,incriment)).text
 Buffer=["",""]
 BufferStat=True
@@ -27,7 +26,6 @@ def BufferIncreament():
 def BufferWrite():
     global BufferStat,Buffer
     if(BufferSel):
-        print(LeterProgress)
         Buffer[0]=(GetHTML(LeterProgress[0],LeterProgress[1]))
         #this is were threading should happen
     else:
