@@ -17,7 +17,7 @@ HTMLManager.LeterProgress=[Letters[LetterCounter],PageCounter]
 
 #init of storage
 import db_manager
-db_manager.DeleteDB()
+#db_manager.DeleteDB()
 db_manager.createtables()
 DBBuffer=[]
 Memory=["","","","","","","","","",""]
@@ -26,6 +26,7 @@ WordCount=0
 def UpdateProgress():
     HTMLManager.LeterProgress=[Letters[LetterCounter],PageCounter]
 UpdateProgress()
+
 while LetterCounter<= len(Letters):
     while not LetterDone:
         PageCounter+=1
@@ -44,11 +45,12 @@ while LetterCounter<= len(Letters):
                 if(len(datum)==5):
                         if (not("-"in datum)):
                             DBBuffer.append(datum)
-                            WordCount=+1
+                            WordCount+= 1
                 Memory[i]=datum
                 i+=1
             if(len(DBBuffer)>=10):
                 db_manager.InsertWords(DBBuffer)
+                db_manager.SaveProses(LetterCounter,PageCounter)
                 DBBuffer=[]
             if Sameword:
                 LetterDone=True

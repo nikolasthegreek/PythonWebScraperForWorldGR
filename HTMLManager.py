@@ -57,13 +57,13 @@ def BufferRead():
 
 def RemoveTone (word):
     word= word.lstrip()
-    word.replace("ά","α")
-    word.replace("έ","ε")
-    word.replace("ή","η")
-    word.replace("ί","ι")
-    word.replace("ό","ο")
-    word.replace("ύ","υ")
-    word.replace("ώ","ω")
+    word=word.replace("ά","α")
+    word=word.replace("έ","ε")
+    word=word.replace("ή","η")
+    word=word.replace("ί","ι")
+    word=word.replace("ό","ο")
+    word=word.replace("ύ","υ")
+    word=word.replace("ώ","ω")
     return word
 
 def CutWord(segment,letter):
@@ -71,7 +71,12 @@ def CutWord(segment,letter):
     del segment[:1]
     i=0
     for part in segment:
-        segment[i]=RemoveTone(part.split("</b>")[0]).split(" ")[0].upper()
+        segment[i]=RemoveTone(part.split("</b>")[0]).split(" ")[0]
+        if(len(segment[i])==0):
+            return "NULL"
+        if(segment[i][0].isupper()):
+            segment[i]=segment[i].replace(segment[i][0],letter)
+        segment[i]=segment[i].upper()
         i+=1
     while True:
         if (segment[0][0]==letter):
